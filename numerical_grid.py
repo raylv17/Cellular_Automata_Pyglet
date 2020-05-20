@@ -2,7 +2,9 @@ import numpy as np
 import random
 import time
 
-
+# creates a matrix of 1s and 0s
+# the generated grid is the initial condition
+# or 0th iteration
 def first_numerical_grid(rows, cols):
     grid = np.zeros(rows*cols)
 
@@ -44,13 +46,18 @@ def first_numerical_grid(rows, cols):
     grid = random_grid(grid)
     return grid
 
-
+# creates a boundary of zeros (bc == boundary condition) on a matrix
 def set_bc(grid):
     rows, cols = np.shape(grid)
     zeros_matrix = np.zeros([rows+2, cols+2])
     zeros_matrix[1:-1,1:-1] = grid
     return zeros_matrix
 
+
+# takes a 3x3 matrix within a larger or an equal sized matrix and takes the sum of the values
+# sum9 adds all the values within the 3x3 matrix
+# sum5diagonal adds the diagonal elements including the center element in a matrix
+# sum5news adds the other 5 elements including the center element
 def sum33(zeros_matrix, pos):
     # small_matrix = np.array([])
 
@@ -75,7 +82,7 @@ def sum33(zeros_matrix, pos):
                     cell_sum += 1
         return cell_sum, zeros_matrix[pos[0], pos[1]]
 
-    def sum5nest():
+    def sum5news():
         cell_sum = zeros_matrix[pos[0] + 1, pos[1] + 0] + zeros_matrix[pos[0] - 1, pos[1] + 0] + \
                    zeros_matrix[pos[0] + 0, pos[1] + 1] + zeros_matrix[pos[0] + 0, pos[1] - 1]
         return cell_sum, zeros_matrix[pos[0], pos[1]]
@@ -83,6 +90,12 @@ def sum33(zeros_matrix, pos):
     # using summation technique
     return sum9()
 
+
+# how the center cell should behave (dead = 0, alive = 1) after checking the sum (sum33) of the matrix
+# is determined by rules
+# game_of_life() is default
+# parity-rule() is something I learned from a course on Cellular Automata and implemented
+# the rest of the rules are just for play and don't mean much
 def rules(cell_sum, alive):
     def game_of_life():
         if (alive and (cell_sum == 3 or cell_sum == 4)) or (not alive and (cell_sum == 3)):
@@ -117,6 +130,7 @@ def rules(cell_sum, alive):
     # using rule
     return game_of_life()
 
+# the return value of this function is used in graphical_grid.py
 def main_function(grid, zeros_matrix):
     rows, cols = np.shape(grid)
     temp = np.zeros([rows,cols])
@@ -133,6 +147,6 @@ if __name__ == "__main__":
     for i in range(10):
         zeros_grid = set_bc(grid)
         print('\n',zeros_grid)
-        t1 = time.time()
+        # t1 = time.time()
         grid = main_function(grid, zeros_grid)
-        print(time.time() - t1)
+        # print(time.time() - t1)
