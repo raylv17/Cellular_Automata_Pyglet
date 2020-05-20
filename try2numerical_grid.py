@@ -41,7 +41,7 @@ def first_numerical_grid(rows, cols):
 
 
     # using first grid
-    grid = n_dots33(grid)
+    grid = random_grid(grid)
     return grid
 
 
@@ -81,7 +81,7 @@ def sum33(zeros_matrix, pos):
         return cell_sum, zeros_matrix[pos[0], pos[1]]
 
     # using summation technique
-    return sum5diagonal()
+    return sum9()
 
 def rules(cell_sum, alive):
     def game_of_life():
@@ -113,9 +113,9 @@ def rules(cell_sum, alive):
             return 1
         else:
             return 0
-
+    
     # using rule
-    return parity_rule()
+    return game_of_life()
 
 def main_function(grid, zeros_matrix):
     rows, cols = np.shape(grid)
@@ -136,4 +136,3 @@ if __name__ == "__main__":
         t1 = time.time()
         grid = main_function(grid, zeros_grid)
         print(time.time() - t1)
-

@@ -1,0 +1,13 @@
+For Game Of Life (which is set as default)
+
+use:
+    under numerical_grid.py:
+        random_grid()
+        sum9()
+        game_of_life()
+
+    under graphical_gird.py:
+        # this isn't necessary, but only for the simulation to work smoothly
+        # adjust the cell_size
+
+        cell_size = 10
